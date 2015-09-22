@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru" ng-app="angularTable">
+	<head>
+		<meta charset="UTF-8">
+		<title>Angular table</title>
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"></script>
+		<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script src="/js/angular-table.js"></script>
+	</head>
+	<body>
+
+		<div class="container" ng-controller="tableController">
+			<div class="page-header">
+				<h1>Angular table</h1>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="input-group">
+						<div class="input-group-btn">
+							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								{{searchField}} <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="javascript:;" ng-click="searchField = 'Name'">Name</a>
+								</li>
+								<li>
+									<a href="javascript:;" ng-click="searchField = 'Age'">Age</a>
+								</li>
+								<li>
+									<a href="javascript:;" ng-click="searchField = 'Email'">Email</a>
+								</li>
+							</ul>
+						</div>
+						<input type="text" class="form-control" ng-show="searchField == 'Name'" placeholder="Bill Green" ng-model="search.name">
+						<input type="text" class="form-control" ng-show="searchField == 'Age'" placeholder="37" ng-model="search.age">
+						<input type="text" class="form-control" ng-show="searchField == 'Email'" placeholder="billy@gomail.com" ng-model="search.email">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-6">
+					<p class="lead">Records count: {{filteredUsers.length}}</p>
+				</div>
+			</div>
+
+			<table class="table">
+				<thead>
+					<tr>
+						<th ng-click="setOrder('name')">Name
+							<span class="glyphicon" ng-show="predicate == 'name'" ng-class="{'glyphicon-arrow-up': (reverse == false), 'glyphicon-arrow-down': (reverse == true)}"></span>
+							</th>
+						<th ng-click="setOrder('gender')">Gender
+							<span class="glyphicon" ng-show="predicate == 'gender'" ng-class="{'glyphicon-arrow-up': (reverse == false), 'glyphicon-arrow-down': (reverse == true)}"></span>
+							</th>
+						<th ng-click="setOrder('age')">Age
+							<span class="glyphicon" ng-show="predicate == 'age'" ng-class="{'glyphicon-arrow-up': (reverse == false), 'glyphicon-arrow-down': (reverse == true)}"></span>
+							</th>
+						<th ng-click="setOrder('email')">Email
+							<span class="glyphicon" ng-show="predicate == 'email'" ng-class="{'glyphicon-arrow-up': (reverse == false), 'glyphicon-arrow-down': (reverse == true)}"></span>
+							</th>
+						<th ng-click="setOrder('phone')">Phone
+							<span class="glyphicon" ng-show="predicate == 'phone'" ng-class="{'glyphicon-arrow-up': (reverse == false), 'glyphicon-arrow-down': (reverse == true)}"></span>
+							</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="user in filteredUsers = (users | filter:search
+						| orderBy:predicate:reverse)">
+						<td>{{user.name}}</td>
+						<td>{{user.gender}}</td>
+						<td>{{user.age}}</td>
+						<td>{{user.email}}</td>
+						<td>{{user.phone}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+	</body>
+</html>
